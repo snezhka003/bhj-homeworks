@@ -3,9 +3,18 @@ const menuList = Array.from(document.querySelectorAll(".menu"));
 
 menuLink.forEach((item) => {
     item.onclick = function() {
-        menuList.forEach((element) => element.classList.remove("menu_active"));
-        item.parentElement.querySelector(".menu").classList.toggle("menu_active"); //только не могу никак понять, почему toggle не срабатывает корректно (добавляет/удаляет класс), а срабатывает как add
-    
-        return false;
-    }
+        let parentMenuLink = item.parentElement.querySelector(".menu");
+        
+        if (parentMenuLink !== menuList.firstElementChild && parentMenuLink !== menuList.lastElementChild) {
+            parentMenuLink.classList.toggle("menu_active");
+
+            return false;
+        };
+
+        menuList.forEach((element) => {
+            if (element.classList.contains("menu_active")) {
+                element.classList.remove("menu_active");
+            }
+        });
+    };
 })
