@@ -19,9 +19,9 @@ function showSlides(newActiveSlide) {
     dotSlider[newActiveSlide].classList.add("slider__dot_active");
 }
 
-dotSlider.forEach((item) => {
+dotSlider.forEach((item, index) => {
     item.onclick = function() {
-        showSlides(newActiveSlide);
+        showSlides(index);
     }
 });
 
