@@ -17,13 +17,19 @@ class Game {
   }
 
   registerEvents() {
-    /*
-      TODO:
-      Написать обработчик события, который откликается
-      на каждый введённый символ.
-      В случае правильного ввода слова вызываем this.success()
-      При неправильном вводе символа - this.fail();
-     */
+    const symbols = Array.from(document.querySelectorAll('.symbol'));
+
+    symbols.forEach(item => {
+      this.currentSymbol = item.textContent.toUpperCase();
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key.toUpperCase() === this.currentSymbol) {
+          this.success();
+        } else {
+          this.fail();
+        };
+      });
+    })
   }
 
   success() {
