@@ -17,19 +17,9 @@ class Game {
   }
 
   registerEvents() {
-    const symbols = Array.from(document.querySelectorAll('.symbol'));
-
-    symbols.forEach(item => {
-      this.currentSymbol = item.textContent.toUpperCase();
-
-      document.addEventListener('keydown', (event) => {
-        if (event.key.toUpperCase() === this.currentSymbol) {
-          this.success();
-        } else {
-          this.fail();
-        };
+      window.addEventListener('keyup', (event) => {
+        event.key.toLowerCase() === this.currentSymbol.textContent.toLowerCase() ? this.success() : this.fail();
       });
-    })
   }
 
   success() {
