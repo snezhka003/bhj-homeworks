@@ -3,11 +3,7 @@ const reveal = Array.from(document.querySelectorAll('.reveal'));
 function isVisible(item) {
     const { top, bottom } = item.getBoundingClientRect(item);
 
-    if (top > window.innerHeight) {
-        return false;
-    }
-
-    if (bottom < 0) {
+    if (top > window.innerHeight || bottom < 0) {
         return false;
     }
 
