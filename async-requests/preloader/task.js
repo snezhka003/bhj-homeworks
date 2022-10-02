@@ -1,14 +1,14 @@
 const items = document.getElementById('items');
 const loader = document.getElementById('loader');
 
-let xhr = new XMLHttpRequest();
+const xhr = new XMLHttpRequest();
 
 xhr.open('GET', 'https://netology-slow-rest.herokuapp.com');
 xhr.send();
-xhr.addEventListener('readystatechange', () => {
+xhr.addEventListener('load', () => {
     if ((xhr.readyState === xhr.DONE && xhr.status === 200)) {
-        let data = JSON.parse(xhr.response);
-        let currency = data.response.Valute;
+        const data = JSON.parse(xhr.response);
+        const currency = data.response.Valute;
 
         loader.classList.remove('loader_active');
 
