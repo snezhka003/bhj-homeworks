@@ -9,23 +9,22 @@ btnSignIn.addEventListener('click', () => {
     formSignIn.addEventListener('submit', (event) => {
         const formData = new FormData(formSignIn);
         const xhr = new XMLHttpRequest();
+        xhr.responseType = 'json';
 
         xhr.open('POST', 'https://netology-slow-rest.herokuapp.com/auth.php');
 
         xhr.addEventListener('load', () => {
-            if (xhr.readyState === xhr.DONE && xhr.status === 200) {
-                const data = JSON.parse(xhr.response);
+            const data = xhr.response;
 
-                if (data.success) {
-                    window.localStorage.setItem('user_id', data.user_id);
-                    userId.textContent = data.user_id;
-                    welcomeBox.classList.add('welcome_active');
-                    signInBox.classList.remove('signin_active');
-                } else {
-                    formSignIn.reset(); 
-                    alert('Неверный логин/пароль');
-                };
-            }; 
+            if (data.success) {
+                window.localStorage.setItem('user_id', data.user_id);
+                userId.textContent = data.user_id;
+                welcomeBox.classList.add('welcome_active');
+                signInBox.classList.remove('signin_active');
+            } else {
+                formSignIn.reset(); 
+                alert('Неверный логин/пароль');
+            };
         });
 
         xhr.send(formData);
