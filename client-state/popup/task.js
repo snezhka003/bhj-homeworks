@@ -1,7 +1,7 @@
 const popup = document.getElementById('subscribe-modal');
 const popupClose = document.querySelector('.modal__close');
 
-let timerId = setTimeout (() => {
+const timerIdShowPopup = setTimeout (() => {
     popup.classList.add('modal_active');
 }, 5000);
 
@@ -12,19 +12,14 @@ popupClose.addEventListener('click', () => {
 });
 
 function getCookie(name) {
-    let cookie_arr = document.cookie.split('; ');
-    let cookie_obj = {};
+    const cookiesArray = document.cookie.split('; ');
+    const cookie = cookiesArray.find(item => item.startsWith(name + '='));
 
-    for (let i=0; i<cookie_arr.length; i++) {
-        let nv = cookie_arr[i].split('=');
-        cookie_obj[nv[0]] = nv[1]; 
-    }
-
-    return cookie_obj[name];
+    return cookie.substring(name.length + 1);
 };     
 
 window.onload = () => {
-    if (getCookie('modal') == 'closed') {
-        clearTimeout(timerId)
+    if (getCookie('modal') === 'closed') {
+        clearTimeout(timerIdShowPopup);
     }
 };
