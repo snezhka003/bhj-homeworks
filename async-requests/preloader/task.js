@@ -13,8 +13,9 @@ xhr.addEventListener('load', () => {
         loader.classList.remove('loader_active');
 
         for (let key in currency) {
-            items.innerHTML += `
-            <div class="item">
+            let divItem = document.createElement('div');
+            divItem.className = "item";
+            divItem.innerHTML = `
                 <div class="item__code">
                     ${currency[key].CharCode}
                 </div>
@@ -22,8 +23,22 @@ xhr.addEventListener('load', () => {
                     ${currency[key].Value}
                 </div>
                 <div class="item__currency">
-                    руб.
-            </div>`
+                    руб.`
+              
+            items.append(divItem);
+
+            // Либо напрямую через добавление в разметку:
+            // items.innerHTML += `
+            // <div class="item">
+            //     <div class="item__code">
+            //         ${currency[key].CharCode}
+            //     </div>
+            //     <div class="item__value">
+            //         ${currency[key].Value}
+            //     </div>
+            //     <div class="item__currency">
+            //         руб.
+            // </div>`
         };    
     };
 });
