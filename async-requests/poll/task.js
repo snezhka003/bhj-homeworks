@@ -4,20 +4,6 @@ const pollAnswers = document.getElementById('poll__answers');
 const xhr = new XMLHttpRequest();
 xhr.responseType = 'json';
 
-// const createRequest = async (options = {url, headers, method, body,}) => {
-//     let xhr = new XMLHttpRequest();
-//     xhr.responseType = 'json';
-
-//     xhr.open(method, url);
-//     xhr.setRequestHeader(headers);
-//     xhr.send(body); 
-// };
-
-// createRequest({
-//     url: 'https://netology-slow-rest.herokuapp.com/poll.php',
-//     method: 'GET',
-// });
-
 xhr.open('GET', 'https://netology-slow-rest.herokuapp.com/poll.php');
 xhr.send();
 xhr.addEventListener('load', () => {
