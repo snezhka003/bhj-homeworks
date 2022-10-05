@@ -1,14 +1,32 @@
 const pollTitle = document.getElementById('poll__title');
 const pollAnswers = document.getElementById('poll__answers');
 
-const xhr = new XMLHttpRequest();
-xhr.responseType = 'json';
+function createRequest(options = {}) {
+    const xhr = new XMLHttpRequest;
+    xhr.responseType = 'json';
 
-xhr.open('GET', 'https://netology-slow-rest.herokuapp.com/poll.php');
-xhr.send();
-xhr.addEventListener('load', () => {
-    const data = xhr.response;
-        
+    xhr.open(options.method, options.url);
+    xhr.setRequestHeader(options.headers);
+    xhr.send(options.body);
+    xhr.addEventListener('load', () => {
+        options.callback(xhr.response);
+    });
+}
+
+// const xhr = new XMLHttpRequest();
+// xhr.responseType = 'json';
+
+// xhr.open('GET', 'https://netology-slow-rest.herokuapp.com/poll.php');
+// xhr.send();
+createRequest({
+    url: 'https://netology-slow-rest.herokuapp.com/poll.php',
+    method: 'GET',
+    callback: (response) => {
+        createBtn(response); 
+    }
+});
+
+function createBtn(data) {
     pollTitle.textContent = data.data.title;
 
     data.data['answers'].forEach(item => {
@@ -31,18 +49,28 @@ xhr.addEventListener('load', () => {
         btn.addEventListener('click', (event) => {
             alert("Спасибо, ваш голос засчитан!");
 
-            const request = new XMLHttpRequest();
-            request.responseType = 'json';
             const index = data.data['answers'].indexOf(event.target);
             const sendForm = `vote=${data.id}&answer=${index}`;
+
+            createRequest({
+                url: 'https://netology-slow-rest.herokuapp.com/poll.php',
+                headers: `'Content-type', 'application/x-www-form-urlencoded'`,
+                method: 'POST',
+                body: sendForm,
+                callback: (response) => {
+                    console.log(response)
+                    showVotes(response); 
+                }
+            });
+
+            // const request = new XMLHttpRequest();
+            // request.responseType = 'json';
             
-            request.open('POST', 'https://netology-slow-rest.herokuapp.com/poll.php');
-            request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            request.send(sendForm);
+            // request.open('POST', 'https://netology-slow-rest.herokuapp.com/poll.php');
+            // request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            // request.send(sendForm);
 
-            request.addEventListener('load', () => {
-                const responseData = request.response;
-
+            function showVotes(responseData) {
                 function getSum() {
                     let count = 0;
                     
@@ -69,7 +97,7 @@ xhr.addEventListener('load', () => {
                     //     ${element.answer}: <span style="font-weight:bold">${votesPersent}%</span>
                     // </p>`)  
                 });
-            });
+            };
         });
     });
-});
+};
