@@ -4,9 +4,17 @@ const pollAnswers = document.getElementById('poll__answers');
 function createRequest(options = {}) {
     const xhr = new XMLHttpRequest;
     xhr.responseType = 'json';
+    function getOptionsHeader() {
+        for (let key in options.header) {
+            headerKey = key;
+            headerValue = options.header[key];
+
+            return xhr.setRequestHeader(headerKey, headerValue);
+        }
+    }
 
     xhr.open(options.method, options.url);
-    xhr.setRequestHeader('Content-type', options.header);
+    getOptionsHeader();
     xhr.send(options.body);
     xhr.addEventListener('load', () => {
         options.callback(xhr.response);
@@ -42,7 +50,7 @@ function createBtn(data) {
 
             createRequest({
                 url: 'https://netology-slow-rest.herokuapp.com/poll.php',
-                header: 'application/x-www-form-urlencoded',
+                header: {['Content-type']: 'application/x-www-form-urlencoded'},
                 method: 'POST',
                 body: sendForm,
                 callback: (response) => {
