@@ -54,7 +54,6 @@ function createBtn(data) {
                 method: 'POST',
                 body: sendForm,
                 callback: (response) => {
-                    console.log(response)
                     showVotes(response); 
                 }
             });
